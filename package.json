@@ -10,6 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/SanBuNam/react_redux_boilerframe.git"
   },
+  "bugs": {
+    "url": "https://github.com/SanBuNam/react_redux_boilerframe/issues"
+  },
+  "homepage": "https://github.com/SanBuNam/react_redux_boilerframe#readme",
   "author": "David Lee",
   "license": "ISC",
   "dependencies": {
@@ -61,8 +65,9 @@
   "engines": {
     "node": ">=8"
   },
-  "bugs": {
-    "url": "https://github.com/SanBuNam/react_redux_boilerframe/issues"
-  },
-  "homepage": "https://github.com/SanBuNam/react_redux_boilerframe#readme"
+  "babel": {
+    "presets": [
+      "babel-preset-react-app"
+    ]
+  }
 }
