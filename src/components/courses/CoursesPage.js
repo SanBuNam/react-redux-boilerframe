@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import * as courseActions from "../../redux/actions/courseActions";
 
 class CoursesPage extends React.Component {
   state = {
@@ -7,14 +9,14 @@ class CoursesPage extends React.Component {
     }
   };
 
-  handleChange = e => {
+  handleChange = event => {
     const course = { ...this.state.course, title: e.target.value };
     this.setState({ course });
   };
 
-  handleSubmit = e => {
+  handleSubmit = event => {
     e.preventDefault();
-    alert(this.state.course.title);
+    this.props.dispatch(courseActions.createCourse(this.state.course));
   };
 
   render() {
@@ -33,4 +35,10 @@ class CoursesPage extends React.Component {
   }
 }
 
-export default CoursesPage;
+function mapStateToProps(state) {
+  return {
+    courses: state.courses
+  };
+}
+
+export default connect(mapStateToProps)(CoursesPage);

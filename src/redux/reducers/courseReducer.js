@@ -1,4 +1,4 @@
-function courseAction(state, action) {
+export default function courseAction(state, action) {
   switch (action) {
     case "CREATE_COURSE":
       return [...state, { ...action.course }];
