@@ -12,6 +12,7 @@ export function ManageCoursePage({
   loadAuthors,
   loadCourses,
   saveCourse,
+  history,
   ...props
 }) {
   const [course, setCourse] = useState({ ...props.course });
@@ -42,7 +43,9 @@ export function ManageCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course);
+    saveCourse(course).then(() => {
+      history.push("/courses"); // This saves it in the history of react-router so it redirects #2 way
+    });
   }
 
   return (
@@ -62,7 +65,8 @@ ManageCoursePage.propTypes = {
   courses: PropTypes.array.isRequired,
   loadCourses: PropTypes.func.isRequired,
   loadAuthors: PropTypes.func.isRequired,
-  saveCourse: PropTypes.func.isRequired
+  saveCourse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
