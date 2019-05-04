@@ -8,6 +8,7 @@ import CoursesPage from "./courses/CoursesPage";
 import ManageCoursePage from "./courses/ManageCoursePage";
 
 function App() {
+  // :slug is accessable in mapStateToProps via ownProps.params.match.slug
   return (
     <div className="container-fluid">
       <Header />

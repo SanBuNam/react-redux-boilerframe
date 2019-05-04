@@ -23,6 +23,8 @@ export function ManageCoursePage({
       loadCourses().catch(error => {
         alert("Loading courses failed" + error);
       });
+    } else {
+      setCourse({ ...props.course });
     }
 
     if (authors.length === 0) {
@@ -30,7 +32,7 @@ export function ManageCoursePage({
         alert("Loading authors failed" + error);
       });
     }
-  }, []);
+  }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target; // this destructure avoids the event getting garbage collected so that it's available within the nested setCourse callback.
@@ -69,9 +71,21 @@ ManageCoursePage.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
+export function getCourseBySlug(courses, slug) {
+  // functions like  is commonly called selector. It selects data from the Redux store.
+  return courses.find(course => course.slug === slug) || null;
+}
+
+function mapStateToProps(state, ownProps) {
+  // mapStateToProps runs everytime the Redux store changes. So when courses are avaiable, it calls getCourseBySlug.
+  // ownProps allow access the component's props. It can be used to read the URL data injected on props by React Router.
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0
+      ? getCourseBySlug(state.courses, slug)
+      : newCourse;
   return {
-    course: newCourse,
+    course,
     courses: state.courses,
     authors: state.authors
   };
