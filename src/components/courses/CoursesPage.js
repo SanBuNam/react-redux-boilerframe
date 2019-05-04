@@ -28,6 +28,7 @@ class CoursesPage extends React.Component {
 
   render() {
     return (
+      // logical && operation below right hand-side will only operate when left hand-side is true
       <>
         {this.state.redirectToAddCoursePage && <Redirect to="/course" />}
         <h2>Courses</h2>
