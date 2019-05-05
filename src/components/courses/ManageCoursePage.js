@@ -5,8 +5,10 @@ import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
+import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
-export function ManageCoursePage({
+function ManageCoursePage({
   courses,
   authors,
   loadAuthors,
@@ -17,6 +19,7 @@ export function ManageCoursePage({
 }) {
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -45,18 +48,28 @@ export function ManageCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course).then(() => {
-      history.push("/courses"); // This saves it in the history of react-router so it redirects #2 way
-    });
+    setSaving(true);
+    saveCourse(course)
+      .then(() => {
+        toast.success("Course saved.");
+        history.push("/courses"); // This saves it in the history of react-router so it redirects #2 way
+      })
+      .catch(error => {
+        setSaving(false); // This way the user can try submitting the form again after an error occurs.
+        setErrors({ onSave: error.message });
+      });
   }
 
-  return (
+  return (authors.length === 0) | (courses.length === 0) ? (
+    <Spinner />
+  ) : (
     <CourseForm
       course={course}
       errors={errors}
       authors={authors}
       onChange={handleChange}
       onSave={handleSave}
+      saving={saving}
     />
   );
 }
