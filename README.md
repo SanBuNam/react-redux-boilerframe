@@ -1,2 +1,1 @@
-# react_redux_boilerframe
-React_Redux_starterkit
+# react-redux-boilerplate
